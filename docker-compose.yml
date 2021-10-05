@@ -7,7 +7,7 @@ services:
           MYSQL_DATABASE: 7202Database
           MYSQL_USER: php 
           MYSQL_PASSWORD: php 
-      image: mariadb:latest
+      image: mysql
       restart: always
 
     myphp:

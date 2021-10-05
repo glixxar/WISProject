@@ -1,4 +1,5 @@
 <?php
+ob_start();
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class login extends CI_Controller {
@@ -21,24 +22,24 @@ class login extends CI_Controller {
 
 		$data['error']= "";
 		// Captcha configuration
-		$config = array(
-			'img_path'      => './assets/captcha_images/',
-			'img_url'       => base_url('assets').'/captcha_images/',
-			'font_path'     => 'system/fonts/texb.ttf',
-			'img_width'     => '160',
-			'img_height'    => 50,
-			'word_length'   => 5,
-			'font_size'     => 18
-		);
+		// $config = array(
+		// 	'img_path'      => './assets/captcha_images/',
+		// 	'img_url'       => base_url('assets').'/captcha_images/',
+		// 	'font_path'     => 'system/fonts/texb.ttf',
+		// 	'img_width'     => '160',
+		// 	'img_height'    => 50,
+		// 	'word_length'   => 5,
+		// 	'font_size'     => 18
+		// );
 		
-		$captcha = create_captcha($config);
+		// $captcha = create_captcha($config);
 								
 		// Unset previous captcha and set new captcha word
-		$this->session->unset_userdata('captchaCode');
-		$this->session->set_userdata('captchaCode', $captcha['word']);
+		// $this->session->unset_userdata('captchaCode');
+		// $this->session->set_userdata('captchaCode', $captcha['word']);
 								
-		// Pass captcha image to view
-		$data['captchaImg'] = $captcha['image'];	
+		// // Pass captcha image to view
+		// $data['captchaImg'] = $captcha['image'];	
 		
  		if (!$this->session->userdata('logged_in'))//check if user already login
 		{	
@@ -78,15 +79,15 @@ class login extends CI_Controller {
 		$username = $this->input->post('username'); //getting username from login form
 		$password = $this->input->post('password'); //getting password from login form
 		$remember = $this->input->post('remember'); //getting remember checkbox from login form
-		$inputCaptcha = $this->input->post('captcha');
-		$sessCaptcha = $this->session->userdata('captchaCode');
+		//$inputCaptcha = $this->input->post('captcha');
+		//$sessCaptcha = $this->session->userdata('captchaCode');
 
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+        	$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
 		
 		
 		if(!$this->session->userdata('logged_in')){	//Check if user already login
-			if($inputCaptcha == $sessCaptcha && $this->form_validation->run() == TRUE) {
+			if($this->form_validation->run() == TRUE) {
 				if ( $this->user_model->login($username, $password) )//check username and password
 				{
 					$user_data = array(
@@ -110,21 +111,21 @@ class login extends CI_Controller {
 					$data['error']= "";
 					
 					// Captcha configuration
-					$config = array(
-						'img_path'      => './assets/captcha_images/',
-						'img_url'       => base_url('assets').'/captcha_images/',
-						'font_path'     => 'system/fonts/texb.ttf',
-						'img_width'     => '160',
-						'img_height'    => 50,
-						'word_length'   => 5,
-						'font_size'     => 18
-					);
+					// $config = array(
+					// 	'img_path'      => './assets/captcha_images/',
+					// 	'img_url'       => base_url('assets').'/captcha_images/',
+					// 	'font_path'     => 'system/fonts/texb.ttf',
+					// 	'img_width'     => '160',
+					// 	'img_height'    => 50,
+					// 	'word_length'   => 5,
+					// 	'font_size'     => 18
+					// );
 					
-					$captcha = create_captcha($config);
+					// $captcha = create_captcha($config);
 											
 					// Unset previous captcha and set new captcha word
-					$this->session->unset_userdata('captchaCode');
-					$this->session->set_userdata('captchaCode', $captcha['word']);
+					// $this->session->unset_userdata('captchaCode');
+					// $this->session->set_userdata('captchaCode', $captcha['word']);
 											
 					// Pass captcha image to view
 					$data['captchaImg'] = $captcha['image'];
@@ -138,24 +139,24 @@ class login extends CI_Controller {
 				}
 				
 						// Captcha configuration
-				$config = array(
-					'img_path'      => './assets/captcha_images/',
-					'img_url'       => base_url('assets').'/captcha_images/',
-					'font_path'     => 'system/fonts/texb.ttf',
-					'img_width'     => '160',
-					'img_height'    => 50,
-					'word_length'   => 5,
-					'font_size'     => 18
-				);
+				// $config = array(
+				// 	'img_path'      => './assets/captcha_images/',
+				// 	'img_url'       => base_url('assets').'/captcha_images/',
+				// 	'font_path'     => 'system/fonts/texb.ttf',
+				// 	'img_width'     => '160',
+				// 	'img_height'    => 50,
+				// 	'word_length'   => 5,
+				// 	'font_size'     => 18
+				// );
 				
-				$captcha = create_captcha($config);
+				// $captcha = create_captcha($config);
 										
-				// Unset previous captcha and set new captcha word
-				$this->session->unset_userdata('captchaCode');
-				$this->session->set_userdata('captchaCode', $captcha['word']);
+				// // Unset previous captcha and set new captcha word
+				// $this->session->unset_userdata('captchaCode');
+				// $this->session->set_userdata('captchaCode', $captcha['word']);
 										
 				// Pass captcha image to view
-				$data['captchaImg'] = $captcha['image'];
+				//$data['captchaImg'] = $captcha['image'];
 				$this->load->view('login', $data);
 			}
 
@@ -165,27 +166,6 @@ class login extends CI_Controller {
 			}
 				$this->load->view('template/footer');
 		}
-		
-	}
-
-	public function refresh() {
-		$config = array(
-			'img_path'      => './assets/captcha_images/',
-			'img_url'       => base_url('assets').'/captcha_images/',
-			'font_path'     => 'system/fonts/texb.ttf',
-			'img_width'     => '160',
-			'img_height'    => 50,
-			'word_length'   => 5,
-			'font_size'     => 18
-		);
-		
-		$captcha = create_captcha($config);
-								
-		// Unset previous captcha and set new captcha word
-		$this->session->unset_userdata('captchaCode');
-		$this->session->set_userdata('captchaCode', $captcha['word']);
-
-		echo $captcha['image'];
 	}
 
 
